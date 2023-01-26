@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ValidInputDirective } from 'src/app/common/valid-input.directive';
+import { ValidInputDirective } from 'src/app/common/directives/valid-input.directive';
+
 
 @Component({
   selector: 'app-login',
