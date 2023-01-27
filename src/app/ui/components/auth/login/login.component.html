@@ -48,14 +48,12 @@
                 Geçerli bir şifre giriniz!
               </div>
             </div>
-            <div class="form-group">
-             <button
-                type="submit"
-                class="btn btn-primary btn-block w-100"
-                [disabled]="!loginForm.valid">
-                Giriş Yap
-              </button>
-            </div>
+            <app-loading-button 
+              btnName="Giriş Yap"
+              btnLoadingDescription="Giriş yapılıyor..."
+              [form]="loginForm"
+              [isloading]="isLoading"
+            ></app-loading-button>
           </form>
     
           <div class="social-auth-links text-center mt-2 mb-3">

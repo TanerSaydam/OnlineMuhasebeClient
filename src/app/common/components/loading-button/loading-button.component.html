@@ -1,0 +1,15 @@
+<div class="form-group">
+    <button
+       *ngIf="!isloading"
+       type="submit"
+       class="btn btn-primary btn-block w-100"
+       [disabled]="!form.valid">
+       {{btnName}}
+     </button>
+     <button
+     *ngIf="isloading"
+     class="btn {{btnClass}}" disabled>
+     <span class="spinner-border spinner-border-sm"></span>                
+     <span class="mx-1">{{btnLoadingDescription}}</span>                
+     </button>
+</div>
