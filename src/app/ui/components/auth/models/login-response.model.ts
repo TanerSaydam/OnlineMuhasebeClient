@@ -8,4 +8,5 @@ export class LoginReponseModel {
     nameLastName: string = "";
     companies: CompanyModel[] = [];
     company: CompanyModel = new CompanyModel();
+    year:number = new Date().getFullYear();
 }
