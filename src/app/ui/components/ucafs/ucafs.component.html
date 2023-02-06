@@ -1,5 +1,36 @@
 <app-blank title="Hesap Planı" [navs]="navs">
+    <app-section sectionTitle="Hesap Planı Ekleme Formu" *ngIf="isAddForm">
+        <form #addForm="ngForm" autocomplete="off" (ngSubmit)="add(addForm)">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="code">Hesap Planı Kodu</label>
+                    <input ngModel type="text" #code name="code" required minlength="5" class="form-control" [validInput]="code.validity.valid">
+                </div>
+                <div class="col-md-2">
+                    <label for="type">Tipi</label>
+                    <select class="form-control" [(ngModel)]="ucafType" name="type" #type>
+                        <option value="M">Muavin</option>
+                        <option value="G">Grup</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label for="name">Hesap Planı Adı</label>
+                    <input type="text" class="form-control" ngModel name="name" #name [validInput]="name.validity.valid" required minlength="3">
+                </div>
+                <div class="col-md-3">
+                    <label>İşlemler</label>
+                    <app-loading-button [form]="addForm" [isloading]="isLoading" btnName="Kaydet" btnLoadingDescription="Kaydediliyor..."></app-loading-button>                   
+                </div>
+            </div>
+        </form>
+    </app-section>
+
     <app-section sectionTitle="Hesap Planı Listesi">
+        <div class="form-group float-left col-md-2">
+            <button class="btn btn-outline-primary" (click)="showAddForm()">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
         <div class="form-group float-right col-md-3">
             <input type="search" placeholder="Aranacak değer..." [(ngModel)]="filterText" class="form-control search">
         </div>
@@ -22,7 +53,7 @@
                         <button class="btn btn-outline-warning btn-sm" title="Güncelle">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button class="btn btn-outline-danger btn-sm mx-1" title="Sil">
+                        <button class="btn btn-outline-danger btn-sm mx-1" title="Sil" (click)="removeById(ucaf.id)">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
