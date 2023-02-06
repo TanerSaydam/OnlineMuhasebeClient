@@ -1,0 +1,8 @@
+.search{
+    background-color: white;
+    background-image: url("/assets/images/searchicon.png");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 10px 20px 12px 40px;
+    
+}
