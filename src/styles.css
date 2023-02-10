@@ -2,3 +2,7 @@
 a{
     cursor: pointer !important;
 }
+
+*{
+    font-weight: 700;
+}

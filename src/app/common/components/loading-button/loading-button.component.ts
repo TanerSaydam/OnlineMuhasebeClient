@@ -15,4 +15,6 @@ export class LoadingButtonComponent {
   @Input() btnName: string = "";
   @Input() btnLoadingDescription: string = "";
   @Input() btnClass: string = "btn-outline-primary w-100";
+  @Input() btnLoadingClass: string = "btn-outline-primary w-100";
+  @Input() iconClass: string  = "fa fa-save";
 }

@@ -11,24 +11,25 @@ import { ValidInputDirective } from 'src/app/common/directives/valid-input.direc
 import { LoadingButtonComponent } from 'src/app/common/components/loading-button/loading-button.component';
 import { ToastrService, ToastrType } from 'src/app/common/services/toastr.service';
 import { RemoveByIdUcafModel } from './models/remove-by-id-ucaf.model';
+import { SwalService } from 'src/app/common/services/swal.service';
 
 @Component({
   selector: 'app-ucafs',
   standalone: true,
   imports: [
-    CommonModule, 
-    BlankComponent, 
-    SectionComponent, 
-    UcafPipe, 
-    FormsModule, 
-    ValidInputDirective, 
+    CommonModule,
+    BlankComponent,
+    SectionComponent,
+    UcafPipe,
+    FormsModule,
+    ValidInputDirective,
     FormsModule,
     LoadingButtonComponent
   ],
   templateUrl: './ucafs.component.html',
   styleUrls: ['./ucafs.component.css']
 })
-export class UcafsComponent implements OnInit{
+export class UcafsComponent implements OnInit {
   navs: NavModel[] = [
     {
       routerLink: "/",
@@ -42,56 +43,96 @@ export class UcafsComponent implements OnInit{
     }
   ]
   ucafs: UcafModel[] = [];
-  filterText: string = "";
-  isAddForm: boolean = false;
+  updateModel:UcafModel = new UcafModel();
   ucafType: string = "M";
-  isLoading:boolean = false;
+  filterText: string = "";
+
+  isLoading: boolean = false;
+
+  isAddForm: boolean = false;
+  isUpdateForm: boolean = false;  
 
   constructor(
-    private _ucaf:UcafService,
-    private _toastr: ToastrService
-  ){}
+    private _ucaf: UcafService,
+    private _toastr: ToastrService,
+    private _swal: SwalService
+  ) { }
 
   ngOnInit(): void {
     this.getAll();
   }
 
-  getAll(){
-    this._ucaf.getAll(res=> {this.ucafs = res.data;});    
+  getAll() {
+    this._ucaf.getAll(res => { this.ucafs = res.data; });
   }
 
-  showAddForm(){
+  showAddForm() {
     this.isAddForm = true;
   }
 
-  add(form: NgForm){
-    if(form.valid){
+  add(form: NgForm) {
+    if (form.valid) {
       this.isLoading = true;
       let model = new UcafModel();
       model.code = form.controls["code"].value;
       model.type = form.controls["type"].value;
       model.name = form.controls["name"].value;
-      
-      this._ucaf.add(model, (res)=> {
-        form.reset();
+
+      this._ucaf.add(model, (res) => {
+        form.controls["code"].setValue("");
+        form.controls["name"].setValue("");
         this.ucafType = "M";
+
         this.getAll();
         this.isLoading = false;
-        this._toastr.toast(ToastrType.Success,res.message,"Başarılı!");
+        this._toastr.toast(ToastrType.Success, res.message, "Başarılı!");
       });
     }
   }
 
-  removeById(id: string){
-    var result = confirm("Silme işlemini yapmak istiyor musunuz?");
-    if(result){
+  get(model:UcafModel){
+    this.updateModel = {...model};
+    this.isUpdateForm = true;
+    this.isAddForm = false;
+  }
+
+  update(form:NgForm){
+    if(form.valid){
+
+      this.isLoading = true;     
+
+      this._ucaf.update(this.updateModel, (res) => {        
+        this.cancel();
+        this.getAll();
+        this.isLoading = false;
+        this._toastr.toast(ToastrType.Info, res.message, "Başarılı!");
+      });
+    }
+  }
+
+  cancel() {
+    this.isAddForm = false;
+    this.isUpdateForm = false;
+  }
+
+  removeById(id: string) {
+    this._swal.callSwal("Sil","Sil?","Hesap planı kodunu silmek istiyor musunuz?",()=>{
       let model = new RemoveByIdUcafModel();
       model.id = id;
 
-      this._ucaf.removeById(model,res=> {
+      this._ucaf.removeById(model, res => {
         this.getAll();
-        this._toastr.toast(ToastrType.Info,res.message,"Silme Başarılı!");
+        this._toastr.toast(ToastrType.Info, res.message, "Silme Başarılı!");
       });
-    }
+    });   
+  }
+
+  setTrClass(type: string) {
+    if (type == "A")
+      return "text-danger";
+    else if (type == "G")
+      return "text-primary";
+    else
+      return "";
   }
 }

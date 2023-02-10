@@ -4,12 +4,14 @@ import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app/app.component";
 import { AuthGuard } from "./app/ui/components/auth/guards/auth.guard";
 import {provideHttpClient} from "@angular/common/http"
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 
 bootstrapApplication(AppComponent,{
   providers: [
     provideHttpClient(),
     importProvidersFrom(
-      BrowserModule,      
+      BrowserModule, 
+      SweetAlert2Module.forRoot(),     
       RouterModule.forRoot([
         {
           path: "",
