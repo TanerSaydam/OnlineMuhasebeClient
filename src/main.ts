@@ -5,6 +5,8 @@ import { AppComponent } from "./app/app.component";
 import { AuthGuard } from "./app/ui/components/auth/guards/auth.guard";
 import {provideHttpClient} from "@angular/common/http"
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { StoreModule } from "@ngrx/store";
+import { loadingReducer } from "./app/common/states/loading/loading-reducer";
 
 bootstrapApplication(AppComponent,{
   providers: [
@@ -12,6 +14,7 @@ bootstrapApplication(AppComponent,{
     importProvidersFrom(
       BrowserModule, 
       SweetAlert2Module.forRoot(),     
+      StoreModule.forRoot({loading: loadingReducer}),
       RouterModule.forRoot([
         {
           path: "",

@@ -16,17 +16,13 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-  isLoading: boolean = false;
-
   constructor(
-    private _auth: AuthService,    
+    private _auth: AuthService,
   ){    
   }
 
   login(form: NgForm) {
-    if (form.valid) {
-      this.isLoading = true;
+    if (form.valid) {      
       this._auth.login(form.value);
     }
   }
