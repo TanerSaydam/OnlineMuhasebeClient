@@ -1,0 +1,47 @@
+<app-blank title="Log Kayıtları">
+    <app-section sectionTitle="Hesap Planı Log Kayıtları">
+        <table class="table table-bordered">
+            <thead>
+                <tr style="background-color: #f1f1f1;">
+                    <th>#</th>
+                    <th>Log Tarihi</th>
+                    <th>İşlem Türü</th>
+                    <th>Tablo</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Mail Adresi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of result.datas let index = index">
+                    <td>{{((index + ((request.pageNumber -1) * request.pageSize)) + 1)}}</td>
+                    <td [innerText]="log.createdDate | date: 'dd.MM.yyyy HH:mm:ss'"></td>
+                    <td [innerText]="changeLogProgessName(log.progress)"></td>
+                    <td>
+                        <ul style="list-style-type: none;">
+                            <li><span class="text-danger">Kod:</span> {{log.dataObject.Code}}</li>
+                            <li><span class="text-danger">Tip:</span> {{log.dataObject.Type}}</li>
+                            <li><span class="text-danger">Adı:</span> {{log.dataObject.Name}}</li>
+                            <li><span class="text-danger">OT:</span> {{log.dataObject.CreatedDate | date: 'dd.MM.yyyy HH:mm:ss'}}</li>
+                        </ul>
+                    </td>
+                    <td [innerText]="log.userName"></td>
+                    <td [innerText]="log.userEmail"></td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example" *ngIf="result.totalPages > 1">
+            <ul class="pagination justify-content-end">
+                <li class="page-item" *ngIf="!result.isFirstPage">
+                    <a class="page-link" (click)="getLogsByTableName(request.pageNumber -1)">Önceki</a>
+                </li>
+                <li class="page-item" [ngClass]="result.pageNumber == n ? 'active': ''"
+                    *ngFor="let n of pageNumbers">
+                    <a class="page-link" (click)="getLogsByTableName(n)">{{n}}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" (click)="getLogsByTableName(request.pageNumber+1)" *ngIf="!result.isLastPage">Sonraki</a>
+                </li>
+            </ul>
+        </nav>
+    </app-section>
+</app-blank>

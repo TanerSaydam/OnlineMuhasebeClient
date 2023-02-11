@@ -11,9 +11,9 @@
             </button>
         </div>
         <div class="form-group">
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
-                    <tr>
+                    <tr style="background-color: #f1f1f1;">
                         <th>#</th>
                         <th>Rapor Adı</th>
                         <th>İstek Tarihi</th>
@@ -42,7 +42,7 @@
                     </tr>
                 </tbody>
             </table>
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example" *ngIf="result.totalPages > 1">
                 <ul class="pagination justify-content-end">
                     <li class="page-item" *ngIf="!result.isFirstPage">
                         <a class="page-link" (click)="getAll(pageNumber -1)">Önceki</a>
