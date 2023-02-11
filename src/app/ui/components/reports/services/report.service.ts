@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MessageResponseModel } from 'src/app/common/models/message-response.model';
+import { PaginationResultModel } from 'src/app/common/models/pagination-result.model';
 import { ReportRequestModel } from 'src/app/common/models/report-request.model';
 import { RequestModel } from 'src/app/common/models/request.model';
 import { ResponseModel } from 'src/app/common/models/response.model';
@@ -17,10 +18,12 @@ export class ReportService {
     private _loginResponse: LoginResponseService
   ) { }
 
-  getAll(callBack: (res: ReportModel[])=> void){
+  getAll(pageNumber: number = 1, pageSize: number = 5,callBack: (res: PaginationResultModel<ReportModel[]>)=> void){
     let model: RequestModel = new RequestModel();
     model.companyId = this._loginResponse.getLoginResponseModel().company.companyId;
-    this._http.post<ResponseModel<ReportModel[]>>("Reports/GetAll",model, res=>{
+    model.pageNumber = pageNumber;
+    model.pageSize = pageSize;
+    this._http.post<ResponseModel<PaginationResultModel<ReportModel[]>>>("Reports/GetAll",model, res=>{
       callBack(res.data);
     });
   }

@@ -23,8 +23,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let report of reports let index = index">
-                        <td>{{index + 1}}</td>
+                    <tr *ngFor="let report of result.datas let index = index">
+                        <td>{{((index + ((pageNumber -1) * pageSize)) + 1)}}</td>
                         <td [innerText]="report.name"></td>
                         <td [innerText]="report?.createdDate | date:'dd.MM.yyyy HH:mm:ss'"></td>
                         <td>
@@ -34,13 +34,28 @@
                         </td>
                         <td [innerText]="report?.updatedDate | date:'dd.MM.yyyy HH:mm:ss'"></td>
                         <td>
-                            <a [href]="'/assets/reports/' + report.fileUrl" target="_blank" *ngIf="report.fileUrl != null">
-                                <i class="fa fa-file-excel"></i>  
+                            <a [href]="'/assets/reports/' + report.fileUrl" target="_blank"
+                                *ngIf="report.fileUrl != null">
+                                <i class="fa fa-file-excel"></i>
                             </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>        
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item" *ngIf="!result.isFirstPage">
+                        <a class="page-link" (click)="getAll(pageNumber -1)">Önceki</a>
+                    </li>
+                    <li class="page-item" [ngClass]="result.pageNumber == n ? 'active': ''"
+                        *ngFor="let n of pageNumbers">
+                        <a class="page-link" (click)="getAll(n)">{{n}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" (click)="getAll(pageNumber+1)" *ngIf="!result.isLastPage">Sonraki</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </app-section>
 </app-blank>
