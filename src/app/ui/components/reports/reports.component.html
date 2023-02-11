@@ -1,11 +1,11 @@
 <app-blank title="Raporlar" [navs]="navs">
     <app-section sectionTitle="Rapor Listesi">
         <div class="form-group">
-            <button class="btn btn-outline-primary mx-1" *ngIf="count >=5">
+            <button class="btn btn-outline-primary mx-1" *ngIf="count >=25" (click)="getAll()">
                 <i class="fa fa-rotate"></i>
                 Yenile
             </button>
-            <button class="btn btn-outline-primary mx-1" *ngIf="count <5">
+            <button class="btn btn-outline-primary mx-1" *ngIf="count <25">
                 <span class="spinner-border spinner-border-sm"></span>
                 Otomatik yenilemede...
             </button>
@@ -34,7 +34,7 @@
                         </td>
                         <td [innerText]="report?.updatedDate | date:'dd.MM.yyyy HH:mm:ss'"></td>
                         <td>
-                            <a [href]="report.fileUrl" target="_blank" *ngIf="report.fileUrl != null">
+                            <a [href]="'/assets/reports/' + report.fileUrl" target="_blank" *ngIf="report.fileUrl != null">
                                 <i class="fa fa-file-excel"></i>  
                             </a>
                         </td>
