@@ -28,6 +28,10 @@ bootstrapApplication(AppComponent,{
             {
               path: "ucafs",
               loadComponent: ()=> import("./app/ui/components/ucafs/ucafs.component").then(c=> c.UcafsComponent)
+            },
+            {
+              path: "reports",
+              loadComponent:()=> import("./app/ui/components/reports/reports.component").then(c=> c.ReportsComponent)
             }
           ]
         },

@@ -1,0 +1,46 @@
+<app-blank title="Raporlar" [navs]="navs">
+    <app-section sectionTitle="Rapor Listesi">
+        <div class="form-group">
+            <button class="btn btn-outline-primary mx-1" *ngIf="count >=5">
+                <i class="fa fa-rotate"></i>
+                Yenile
+            </button>
+            <button class="btn btn-outline-primary mx-1" *ngIf="count <5">
+                <span class="spinner-border spinner-border-sm"></span>
+                Otomatik yenilemede...
+            </button>
+        </div>
+        <div class="form-group">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Rapor Adı</th>
+                        <th>İstek Tarihi</th>
+                        <th>Durum</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th>Dosya</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let report of reports let index = index">
+                        <td>{{index + 1}}</td>
+                        <td [innerText]="report.name"></td>
+                        <td [innerText]="report?.createdDate | date:'dd.MM.yyyy HH:mm:ss'"></td>
+                        <td>
+                            <span [class]="changeSpanClassByStatus(report.status)">
+                                {{!report.status ? 'Hazırlanıyor...' : 'Hazır'}}
+                            </span>
+                        </td>
+                        <td [innerText]="report?.updatedDate | date:'dd.MM.yyyy HH:mm:ss'"></td>
+                        <td>
+                            <a [href]="report.fileUrl" target="_blank" *ngIf="report.fileUrl != null">
+                                <i class="fa fa-file-excel"></i>  
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+    </app-section>
+</app-blank>

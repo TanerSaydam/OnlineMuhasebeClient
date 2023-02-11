@@ -93,11 +93,14 @@
 
     <!-- Liste -->
     <app-section sectionTitle="Hesap Planı Listesi">
-        <div class="form-group float-left col-md-2">
+        <div class="form-group float-left col-md-4">
             <button class="btn btn-outline-primary" *ngIf="!isAddForm && !isUpdateForm" (click)="showAddForm()">
                 <i class="fa fa-plus"></i>
             </button>
-        </div>
+            <app-exel-loading-button (click)="exportExcel()">
+
+            </app-exel-loading-button>
+        </div>        
         <div class="form-group float-right col-md-3">
             <input type="search" placeholder="Aranacak değer..." [(ngModel)]="filterText" class="form-control search">
         </div>

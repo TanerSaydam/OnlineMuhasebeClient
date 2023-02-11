@@ -1,8 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    font-weight: 700;
+}
+
 a{
     cursor: pointer !important;
 }
 
-*{
-    font-weight: 700;
+
+tr:hover{
+    background-color: #f3f3f3;
+}
+
+.search{
+    background-color: white;
+    background-image: url("/assets/images/searchicon.png");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 10px 20px 12px 40px;
+    width: 100px;
+    float: right;
+    transition: 1s;
+}
+
+.search:focus{
+    width: 100%;   
 }
