@@ -1,4 +1,4 @@
-export class RemoveByIdUcafModel{
+export class RemoveByIdModel{
     id: string = "";
     companyId: string = "";
 }

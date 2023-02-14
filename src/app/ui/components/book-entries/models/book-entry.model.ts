@@ -5,5 +5,6 @@ export class BookEntryModel{
     description: string = "";
     type: string = "";
     debit: number = 0;
-    credit: number = 0;    
+    credit: number = 0; 
+    companyId: string ="";
 }

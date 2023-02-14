@@ -1,16 +1,18 @@
 <app-blank title="Yevmiye Fişleri" [navs]="navs">
     <app-section sectionTitle="Yevmiye Fişi Listesi">
+        <!-- Ekleme ve Excel Butonu -->
         <div class="form-group float-left col-md-4">
-            <button class="btn btn-outline-primary" title="Yevmiye Fişi Oluştur" data-toggle="modal"
+            <button class="btn btn-outline-primary" title="Yevmiye Fişi Oluştur" 
+                data-toggle="modal"
                 data-target="#createModal">
                 <i class="fa fa-plus"></i>
             </button>
             <app-exel-loading-button (click)="exportExcel()" title="Excel'e Aktar">
             </app-exel-loading-button>
-        </div>
-        <div class="form-group float-right col-md-3">
-            <input type="search" placeholder="Aranacak değer..." [(ngModel)]="filterText" class="form-control search">
-        </div>
+        </div>        
+        <!-- Ekleme ve Excel Butonu -->
+
+        <!-- Liste -->
         <div class="form-group">
             <table class="table table-bordered">
                 <thead>
@@ -19,6 +21,7 @@
                         <th>Tarih</th>
                         <th>Yevmiye Fişi Numarası</th>
                         <th>Tip</th>
+                        <th>Açıklama</th>
                         <th>Borç</th>
                         <th>Alacak</th>
                         <th>Bakiye</th>
@@ -31,15 +34,21 @@
                         <td [innerText]="bookEntry.date | date: 'dd.MM.yyyy'"></td>
                         <td [innerText]="bookEntry.bookEntryNumber"></td>
                         <td [innerText]="bookEntry.type"></td>
+                        <td [innerText]="bookEntry.description"></td>
                         <td [innerText]="bookEntry.debit | trCurrency"></td>
                         <td [innerText]="bookEntry.credit | trCurrency"></td>
                         <td [innerText]="(bookEntry.debit - bookEntry.credit) | trCurrency"></td>
                         <td>
                             <div>
-                                <button class="btn btn-outline-warning btn-sm" title="Güncelle">
+                                <button 
+                                    class="btn btn-outline-warning btn-sm" 
+                                    title="Güncelle"
+                                    (click)="getUpdateModel(bookEntry)"
+                                    data-toggle="modal"
+                                    data-target="#updateModal">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button class="btn btn-outline-danger btn-sm mx-1" title="Sil">
+                                <button (click)="removeById(bookEntry)" class="btn btn-outline-danger btn-sm mx-1" title="Sil">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>
@@ -62,11 +71,12 @@
                 </ul>
             </nav>
         </div>
+        <!-- Liste -->
     </app-section>
 </app-blank>
 
 
-
+<!-- Ekleme İşlemi -->
 <div class="modal fade" id="createModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -131,3 +141,73 @@
         </div>
     </div>
 </div>
+<!-- Ekleme İşlemi -->
+
+<!-- Güncelleme İşlemi -->
+<div class="modal fade" id="updateModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Yevmiye Fişi Güncelle</h1>
+                <button class="btn btn-outline-danger" id="updateModelCloseBtn" data-dismiss="modal">
+                    <i class="fa fa-xmark" data-dismiss="modal"></i>
+                </button>
+            </div>
+            <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="updateType">Tip</label>
+                        <select 
+                            class="form-control" 
+                            name="updateType" 
+                            id="updateType"
+                            #updateType 
+                            [(ngModel)]="updateModel.type"
+                            required>
+                            <option value="Muavin">Muavin</option>
+                            <option value="Açılış">Açılış</option>
+                            <option value="Kapanış">Kapanış</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="updateDate">Tarih</label>
+                        <input 
+                            class="form-control" 
+                            type="date" 
+                            #updateDate 
+                            name="updateDate" 
+                            [(ngModel)]="updateModel.date"
+                            required 
+                            [validInput]="updateDate.validity.valid">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="updateDescription">Açıklama</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            #updateDescription 
+                            name="updateDescription"
+                            id="updateDescription"
+                            [(ngModel)]="updateModel.description"
+                            required
+                            minlength="3"
+                            [validInput]="updateDescription.validity.valid">
+                        <div class="invalid-feedback">
+                            Açıklama alanı en az 3 karakter olmalıdır!
+                        </div>
+                    </div>
+                    <div class="form-group mt-1">
+                        <app-loading-button 
+                        btnName="Yevmiye Fişi Güncelle"    
+                        btnClass="btn btn-outline-warning w-100"                    
+                        btnLoadingDescription="Güncelleniyor..."
+                        btnLoadingClass="btn btn-outline-warning w-100"                         
+                        [form]="updateForm">
+                        </app-loading-button>
+                    </div>
+                </div>                
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Güncelleme İşlemi -->
