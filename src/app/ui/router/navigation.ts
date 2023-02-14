@@ -14,7 +14,12 @@ export const Navigations: Navigation[] = [
         routerLink: "/ucafs",
         name:"Hesap Planı",
         icon:"fa fa-file-signature"        
-    },   
+    }, 
+    {
+        routerLink: "/book-entries",
+        name: "Yevmiye Fişleri",
+        icon: "fa fa-book-open"
+    },
     {
         routerLink: "/reports",
         name: "Raporlar",

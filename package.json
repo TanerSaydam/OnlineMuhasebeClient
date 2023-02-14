@@ -23,6 +23,7 @@
     "crypto-ts": "^1.0.2",
     "jwt-decode": "^3.1.2",
     "rxjs": "~7.8.0",
+    "tr-currency": "^0.0.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

@@ -9,7 +9,11 @@
         <a class="nav-link"><span class="text-danger">Şirket:</span> {{loginResponse.company.companyName}}</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a class="nav-link"><span class="text-danger">Yıl:</span> {{loginResponse.year}}</a>
+        <select class="form-control" [(ngModel)]="loginResponse.year" (change)="changeYear()">
+          <option>2021</option>
+          <option>2022</option>
+          <option>2023</option>
+        </select>
       </li>
     </ul>
 
